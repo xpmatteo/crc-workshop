@@ -1,0 +1,311 @@
+\documentclass[handout,t,12pt]{beamer}
+\setbeamersize{text margin left=0.3cm}
+\setbeamersize{text margin right=0.3cm}
+\setbeamertemplate{navigation symbols}{} 
+
+\usetheme{default}
+\useoutertheme{infolines}
+
+\usepackage{pgfpages}
+\pgfpagesuselayout{4 on 1}[a4paper,landscape,border shrink=5mm]
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{concrete}
+\usepackage{url}
+
+\newcommand{\Square}[1]{``#1''}
+\newcommand{\Card}[1]{``#1''}
+\newcommand{\money}[1]{\$#1,00}
+\newcounter{scenarioid}\setcounter{scenarioid}{0}
+
+\newenvironment{scenario}[1]{%
+\addtocounter{scenarioid}{1} 
+{\Large Scenario \thescenarioid: \emph{#1}\\[3px]\hrule}
+\vspace{1\bigskipamount}
+}{%
+}
+
+\title{Object Thinking with CRC cards}
+\author[@xpmatteo]{Matteo Vaccari \\ \texttt{vaccari@pobox.com}}
+\institute{}
+\date[XP Days 2012]{XP Days, 30 november 2012}
+     
+\begin{document}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+
+  \begin{frame}\frametitle{Classes, Responsibilities, Collaborations}
+
+    \begin{itemize}
+      \item Class names
+      \begin{enumerate}
+        \item Should not end in -er
+        \item Should be names of \emph{things}, not \emph{actions}
+        \item Should be related to the \emph{domain} of the problem 
+      \end{enumerate}
+      \item Responsibilities
+      \begin{itemize}
+        \item For knowing
+        \item For doing
+        \item For deciding\\
+        An object with less than three responsibilities does too little.  An object with more than five responsibilities does too much.  
+      \end{itemize}
+      \item Collaborations. 
+      \begin{itemize}
+        \item To fulfill its responsibilities, an object must have the necessary information, or have a collaborator that can provide it.
+        \item Not too many responsibilities: delegate to other objects.
+        \item An object should not \emph{know too many other objects} (more than~3).
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}\frametitle{References}
+      \begin{thebibliography}{10}
+        
+        \bibitem{BeckCunningham89}
+          Kent Beck, Ward Cunningham
+          \newblock A Laboratory For Teaching Object-Oriented Thinking,
+          \newblock \url{http://c2.com/doc/oopsla89/paper.html}, 1989
+
+        \bibitem{WirfsBrock89}
+          Rebecca Wirfs-Brock, Brian Wilkerson
+          \newblock Object-Oriented Design: A Responsibility-Driven Approach
+          \newblock OOPSLA '89
+          
+        % \bibitem{Williams04}
+        %   Laurie Williams
+        %   \newblock Agile Requirements Elicitation, 
+        %   \newblock 2004
+        % 
+        \bibitem{Schuchert}
+          Brett Schuchert
+          \newblock Katas.MonopolyTheGame(r)
+          \newblock \url{schuchert.wikispaces.com/Katas.MonopolyTheGame(r)}
+
+        \bibitem{Wilkinson98}
+          Nancy M. Wilkinson
+          \newblock \emph{Using CRC Cards: An Informal Approach to Object-Oriented Development}
+          \newblock Cambridge University Press, 1998
+        
+        
+    \end{thebibliography}
+  \end{frame}
+
+  \section{Monopoly Scenarios}  
+  
+  \begin{frame}
+    \begin{scenario}{Movement}
+      \begin{itemize}
+        \item Given that player A is on \Square{Oriental Avenue}
+        \item He rolls 2 and 1.  
+        \item He lands on \Square{Connecticut Avenue}
+      \end{itemize}      
+    \end{scenario}
+  \end{frame}
+
+  \begin{frame}
+    \begin{scenario}{Passing through GO!}
+      \begin{itemize}
+        \item Given that 
+        \begin{itemize}
+          \item player B's balance is \money{1000}
+          \item she is on \Square{Park Place}          
+        \end{itemize}
+        \item She rolls 2 and 3.
+        \item She lands on \Square{Mediterranean Avenue}.
+        \item Player B collects \money{200} from the bank.
+        \item Her balance is now \money{1200}.
+      \end{itemize}
+      
+    \end{scenario}
+  \end{frame}
+
+  \begin{frame}
+    \begin{scenario}{Go to jail}
+      \begin{itemize}
+        \item Player C lands on \Square{Go to jail}.
+        \item He is moved immediately to \Square{In Jail}.
+        \item He does not pass through \Square{GO!}
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+
+  \begin{frame}
+    \begin{scenario}{Income Tax when assets are\\more than \money{2000}: pay \money{200}}
+      \begin{itemize}
+        \item Given that player C's balance is \money{3000}.
+        \item He lands on \Square{Income Tax}.
+        \item He pays \money{200} to the bank.  His balance is now \money{2800}.
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+
+  \begin{frame}
+    \begin{scenario}{Income Tax when assets are\\less than \money{2000}: pay 10\% of all assets}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item Player C's balance is \money{1000}
+          \item Player C owns \Square{Oriental Avenue}, which has a purchase price of \money{100}.
+        \end{itemize}
+        \item Player C lands on \Square{Income Tax}.
+        \item He pays \money{110} to the bank.  His balance is now \money{890}.
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+  \section{Order of play}
+
+  \begin{frame}
+    \begin{scenario}{Players play in sequence}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item the players in the game are A and B
+          \item it's A's turn
+        \end{itemize}
+        \item Player A rolls and moves
+        \item Player B rolls and moves
+        \item Player A rolls and moves
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+
+  \begin{frame}
+    \begin{scenario}{Roll double dice}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item The players in the game are A and B
+          \item It's A's turn
+          \item Player A is on \Square{Go!}.
+        \end{itemize}
+        \item Player A rolls 3 and 3, he lands on \Square{Reading Railroad}
+        \item Then he rolls again and gets 1 and 2
+        \item He arrives on \Square{Vermont Avenue}
+        \item Now it's B's turn
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+
+  \begin{frame}
+    \begin{scenario}{Roll double dice three times}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item The players in the game are A and B
+          \item It's player B's turn
+          \item Player B is on \Square{Go!}.
+        \end{itemize}
+        \item Player B rolls 1 and 1, she lands on \Square{Community Chest}
+        \item Then she rolls again and gets 2 and 2; she lands on \Square{Oriental Avenue}
+        \item Then she rolls again and gets 3 and 3; she is moved to \Square{In Jail}
+        \item Now it's A's turn
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+  \section{Property and rent}
+
+  \begin{frame}
+    \begin{scenario}{Buy property}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item Player A's balance is \money{1000}
+          \item \Square{Baltic Avenue} has purchase cost \money{80} and is owned by the bank
+        \end{itemize}
+        \item Player A lands on \Square{Baltic Avenue}.
+        \item Player A is offered the chance to buy Baltic Avenue
+        \item Player A decides to buy Baltic Avenue.
+        \item He pays \money{80} to the bank.  His balance is now \money{920}.
+        \item He now has the deed for Baltic Avenue
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+
+
+  \begin{frame}
+    \begin{scenario}{Not enough money to buy property}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item Player A's balance is \money{10}
+          \item \Square{Baltic Avenue} has purchase cost \money{80} and is owned by the bank
+        \end{itemize}
+        \item Player A lands on \Square{Baltic Avenue}
+        \item Player A is not offered the chance to buy Baltic Avenue
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+  \begin{frame}
+    \begin{scenario}{Pay rent on unimproved property}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item Player A's balance is \money{1000}.
+          \item Player B's balance is \money{1000}.
+          \item Player B owns \Square{Oriental Avenue},
+          \item \Square{Oriental Avenue} has rent \money{6}, has no houses or hotels, is not mortgaged
+        \end{itemize}
+        \item Player A lands on \Square{Oriental Avenue}
+        \item Player A pays \money{6} to Player B.
+        \item Player A's balance is now  \money{994}.
+        \item Player B's balance is now \money{1006}.
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+
+
+  % ### Scenario 13 - Pay rent on Railroad property
+  % 
+  % \item Given that
+  %   \item Player A's balance is \money{1000}.
+  %   \item Player B's balance is \money{1000}.
+  %   \item Player B owns Reading Railroad only (no mortgage.)
+  % \item Player A lands on \Square{Reading Railroad}
+  % \item Player A pays \money{25} to Player B.
+  % \item Player A's balance is now  \money{975}; Player B's balance is now \money{1025}.
+
+
+  \begin{frame}
+    \begin{scenario}{Pay rent on Railroad property (two railroads)}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item Player A's balance is \money{1000}.
+          \item Player B's balance is \money{1000}.
+          \item Player B owns Reading Railroad and Pennsylvania Railroad; no        mortgages.\end{itemize}
+          \item Player A lands on \Square{Reading Railroad}
+          \item Player A pays \money{50} to Player B.
+          \item Player A's balance is now  \money{950}; Player B's balance is now \money{1050}.
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+  
+
+  \section{Community Chest and Chance}
+
+  \begin{frame}
+    \begin{scenario}{Everyone donates to you}
+      \begin{itemize}
+        \item Given that:
+        \begin{itemize}
+          \item The players in the game are A, B and C
+          \item Player A, B anc C all have \money{1000} balance
+        \end{itemize}
+        \item Player B lands on \Square{Community Chance}
+        \item She picks up the card \Card{Everyone Must Donate 10\% of His Holdings to You in Cash}
+        \item Player A's and C's balance is now \money{900}
+        \item Player B's balance is \money{1200}
+      \end{itemize}
+    \end{scenario}
+  \end{frame}
+
+\end{document}
